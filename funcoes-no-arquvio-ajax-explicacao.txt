@@ -1,0 +1,50 @@
+ Agora vamos descrever cada uma das funções separadamente, para esclare
+cer quaisquer dúvidas que tenham restado após a leitura do código todo.
+
+ timedNews(data)- esta é a única função que é chamada diretamente pela pá
+gina HTML da nossa aplicação; ela é a função que chama a sendRequest
+ para requisitar os dados do servidor e em seguida se programa para ser
+ executada novamente a cada 30 segundos, por isso, a cada período de 30
+ segundos o arquivo de dados é requisitado novamente e as notícias conti
+das nele são verificadas pela função parseNews.
+
+ sendRequest(url,params,HttpMethod)- função responsável por requisitar os
+ dados do servidor de forma assíncrona ao servidor; para isso, ela instan
+cia um objeto XMLHttpRequest utilizando a função initXMLHttpRequest e
+ depois configura a funcão onReadyState como callback da chamada.
+
+
+ initXMLHttpRequest()- esta função existe apenas devido a incompatibilidade
+ entre os browsers. Como nos dois mais usados o objeto XMLHttpRequest
+ possui diferenças na implementação, essa função testa a existência desses
+ objetos e retorna qual foi encontrado para função sendRequest utilizá-lo.
+ 
+onReadyState()- função configurada como callback na sendRequest. Ela é cha
+mada a cada mudança no estado da requisição e enquanto este estado não
+ for igual a READY_STATE_COMPLETEeleconfiguraumamensagemescrito
+ "loading..."na página. Quando a requisição estiver completa, a mensagem
+ de loading é retirada e chama-se a função parseNews() para tratar os dados
+ recém chegados.
+
+
+ newDetect(titulo)- dado um título, esta função verifica se já existe alguma
+ notícia com este título inserida na página. Se houver retorna true, caso
+ contrário retornar false.
+
+
+ parseNews()- chamada para tratar os dados quando eles chegam do servidor.
+ Essa função primeiro recupera a data e o título das notícias e os junta
+ formando assim o título que será colocado na página, após isso ela chama
+ a função newDetect para verificar se esse título já se encontra na página,
+ se for retornado false o notícia é inserida na página, caso contrário nada
+ será feito, pois se trata de uma notícia antiga.
+
+
+ getNodeValue(obj,tag)- esta função serve apenas para recuperar o valor de um
+ atributo de um nó DOM, ela foi implementada apenas para facilitar esse
+ processo e evitar linhas de comando muito grandes na função parseNews.
+
+
+ loadingMsg(set)- controla a exibição/remoção da mensagem de loading na pá
+gina. Se set for 1 a mensagem é colocada, para outro valor a mensagem de
+ loading é removida, se existir
